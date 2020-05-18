@@ -14,9 +14,7 @@
 - カスタムデータ属性を使いましょう。
 - idやclassはスタイルのためだけではないという意見はごもっともです！
 
-# 初期構築
-
-環境バージョン
+# 環境バージョン
 
 ```console
 $ node -v
@@ -28,7 +26,11 @@ $ npm -v
 6.14.4
 ```
 
-## create-react-app
+# 準備
+
+create-react-appを使います。
+
+## プロジェクト作成
 
 `testing-app1`と言うプロジェクトを作成します。
 
@@ -38,16 +40,20 @@ $ npx create-react-app testing-app1 --template typescript
 
 ## テストライブラリの追加
 
+テスト用のライブラリを追加しておきます。
+
 ```console
 $ yarn add -D @testing-library/react @testing-library/jest-dom
 ```
 
-## メインのソースを書く
+## コード作成
 
-公式サイトを参考にして、メインのソースコードを記述します。
-後述するテストで使うので、divタグに```data-testid```を追記してください。
+テスト対象となるソースコードと、それをテストするソースコードを書きます。
 
-https://ja.reactjs.org/docs/hooks-overview.html
+### テスト対象のコード
+
+テスト対象のコードを記述します。
+後述するテストで使うので、divタグにカスタムデータ属性である```data-testid="result"```を追記してください。
 
 ```typescript:App.tsx
 import React, { useState } from "react";
@@ -67,7 +73,7 @@ function App() {
 export default App;
 ```
 
-## テストコードを書く
+### テストコード
 
 ここでは、初期値とボタンを押した時のカウントアップをテストします。
 今回のテストでは、waitForとscreenを使っていないので、書かなくても大丈夫です。
@@ -106,13 +112,19 @@ describe("<App> Test", () => {
 });
 ```
 
-## テスト実行
+# テスト実行
 
 コンソールからコマンドを実行してみます。
 
+## テストコマンド
+
 ```console
 $ npm run test
+```
 
+## テスト結果
+
+```console
  PASS  src/App.test.tsx
   <App> Test
     ✓ 初期値は0である (32ms)
@@ -132,7 +144,7 @@ Watch Usage: Press w to show more.
 テストが上手く行きましたね。
 
 
-## プロダクションビルドではカスタムデータ属性を取り除く
+# プロダクションビルドではカスタムデータ属性を取り除く
 
 `data-testid`が出力されるので、それを抑止する方法です。
 あっても別に悪さはしないのだけど、トラフィックの観点でメリットがあるそうです。
